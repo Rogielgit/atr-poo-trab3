@@ -1,63 +1,78 @@
-package pootrab3;
+import java.util.*;
 
-import java.io.*;
+public abstract class Livro
+{
+	protected String titulo, autor, assunto, editora;
+	protected int ano, exemplar;
+	protected GregorianCalendar devolucao; //para registrar a data de devolucao do livro
+	protected boolean emprestado;  //flag de emprestado
 
-
-
-public class Livro{
-	
-	public enum Tipo{
-		TEXTO, GERAL
-	}
-	private String titulo;
-	private String autor;
-	private Tipo tipo;
-	private int quant;
-
-	public Livro(String titulo, String autor, String tipo, int quant){
+	public Livro(String titulo, String autor, String assunto, String editora, int ano, int exemplar)
+	{	
 		this.titulo = titulo;
 		this.autor = autor;
-		this.quant = quant;
-
-		if("TEXTO" == tipo.toUpperCase()){
-			this.tipo = Tipo.TEXTO;
-		}
-		else if("GERAL" == tipo.toUpperCase()){
-			this.tipo = Tipo.GERAL;
-		}
+		this.assunto = assunto;
+		this.editora = editora;
+		this.ano = ano;
+		this.exemplar = exemplar;
+		this.devolucao = null;
+		this.emprestado = false;
 	}
 
-	public String getTitle(){
-		return this.titulo;
+	//Sets
+	public void setTitulo(String titulo)
+	{
+		this.titulo = titulo;	
+	}
+	public void setAutor(String autor)
+	{
+		this.autor = autor;	
+	}
+	public void setAssunto(String assunto)
+	{
+		this.assunto = assunto;	
+	}
+	public void seEditota(String editora)
+	{
+		this.editora = editora;	
+	}
+	public void setAutor(int  ano)
+	{	
+		this.ano = ano;	
+	}
+	public void setDataDevolucao(Date dataDevolucao)
+	{
+		this.devolucao = new GregorianCalendar();
+		this.devolucao.setTime(dataDevolucao);  //seta a data de devolucao no calendario
+		this.emprestado = true;
 	}
 
-	public String getAuthor(){
-		return this.autor;
+	//Gets
+	public Date getDataDevolucao() //retorna data de devolucao
+	{
+		return this.devolucao.getTime();
 	}
 
-	public int getQuant(){
-		return this.quant;
+	public void registraDevolucaoLivro()
+	{
+		this.emprestado = false;
+		this.devolucao = null;
 	}
 
-	public String getTipo(){
-		switch(this.tipo){
-			case TEXTO:
-				String tx = "TEXTO";
-				return tx;
-				
-			case GERAL:
-				String ge = "GERAL";
-				return ge;
-				
-			default:
-				String ti = "TIPO INVALIDO";
-				return ti;
-				
-		}
+}
+
+class LivroTexto extends Livro  //livro texto
+{
+	public LivroTexto(String titulo, String autor, String assunto, String editora, int ano)
+	{
+		super(titulo, autor, assunto, editora, ano);
 	}
-	
+}
 
-	
-
-
+class LivroGeral extends Livro  //livro geral
+{
+	public LivroGeral(String titulo, String autor, String assunto, String editora, int ano)
+	{
+		super(titulo, autor, assunto, editora, ano);
+	}
 }
